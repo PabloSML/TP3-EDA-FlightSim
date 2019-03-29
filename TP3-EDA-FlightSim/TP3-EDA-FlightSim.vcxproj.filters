@@ -29,16 +29,16 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Callback.c">
+    <ClCompile Include="Callback.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="parser.c">
+    <ClCompile Include="parser.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Random.c">
+    <ClCompile Include="Random.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="UserData.c">
+    <ClCompile Include="UserData.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

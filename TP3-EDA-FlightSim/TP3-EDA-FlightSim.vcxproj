@@ -121,10 +121,10 @@
     <ClInclude Include="UserData.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Callback.c" />
-    <ClCompile Include="parser.c" />
-    <ClCompile Include="Random.c" />
-    <ClCompile Include="UserData.c" />
+    <ClCompile Include="Callback.cpp" />
+    <ClCompile Include="parser.cpp" />
+    <ClCompile Include="Random.cpp" />
+    <ClCompile Include="UserData.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
