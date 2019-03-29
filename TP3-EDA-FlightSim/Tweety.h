@@ -5,10 +5,13 @@
 class tweety
 {
 public:
-	tweety(int width, int height);
-	move(void);
-	move(double speed);
-	project(tweety* flock, int birdCount, double randomJiggleLimit, double eyesight);
+	tweety() {};
+	
+	void randomize(unsigned int maxWidth, unsigned int maxHeight, double usrSpeed);	//velocidad en modo 1
+	void randomize(unsigned int maxWidth, unsigned int maxHeight);	//velocidad en modo 2
+	void move(unsigned int height, unsigned int width);
+	//void move(unsigned int height, unsigned int width, double speed); no creo que sea necesario
+	void project(tweety* flock, int birdCount, double randomJiggleLimit, double eyesight);
 
 
 private:
@@ -16,8 +19,8 @@ private:
 	point pos;
 	double angle;
 	double newAngle;
-	double eyesight;
-	double rJiggle;
-	bool inSight(const tweety& t, double rJiggle);
+	//double eyesight;
+	//double rJiggle;
+	bool inSight(const tweety& t, double eyesight);
 
 };
