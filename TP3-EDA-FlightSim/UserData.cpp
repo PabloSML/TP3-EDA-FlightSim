@@ -8,6 +8,7 @@ userData_t* createUserData()
 	data = (userData_t*)malloc(sizeof(userData_t));
 	if (data != NULL)
 	{
+		data->birdCount = EMPTY;
 		data->eyesight = EMPTY;
 		data->randomJiggleLimit = EMPTY;
 	}
@@ -15,12 +16,19 @@ userData_t* createUserData()
 }
 
 //esta funcion modifica el dato seleccionado con el valor recibido por argumento
-bool setUserData(userData_t* userData, data_t field, int value)
+bool setUserData(userData_t* userData, data_t field, double value)
 {
 	bool success = false;
 
 	switch (field)
 	{
+	case BIRDS:
+		if (!(userData->birdCount))
+		{
+			userData->birdCount = (unsigned int)value;
+			success = true;
+		}
+		break;
 	case EYESIGHT:
 		if (!(userData->eyesight))
 		{
@@ -41,10 +49,13 @@ bool setUserData(userData_t* userData, data_t field, int value)
 }
 
 //esta funcion devuelve el dato especificado
-int getUserData(userData_t* userData, data_t field)
+double getUserData(userData_t* userData, data_t field)
 {
 	switch (field)
 	{
+	case BIRDS:
+		return userData->birdCount;
+		break;
 	case EYESIGHT:
 		return userData->eyesight;
 		break;
@@ -59,6 +70,8 @@ bool isDataFull(userData_t* data)
 {
 	bool dataFull = true;
 
+	if (data->birdCount == EMPTY)
+		dataFull = false;
 	if (data->eyesight == EMPTY)
 		dataFull = false;
 	if (data->randomJiggleLimit == EMPTY)

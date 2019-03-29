@@ -117,12 +117,15 @@
   <ItemGroup>
     <ClInclude Include="Callback.h" />
     <ClInclude Include="parser.h" />
+    <ClInclude Include="Point.h" />
     <ClInclude Include="Random.h" />
+    <ClInclude Include="Tweety.h" />
     <ClInclude Include="UserData.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Callback.cpp" />
     <ClCompile Include="parser.cpp" />
+    <ClCompile Include="Point.cpp" />
     <ClCompile Include="Random.cpp" />
     <ClCompile Include="UserData.cpp" />
   </ItemGroup>
