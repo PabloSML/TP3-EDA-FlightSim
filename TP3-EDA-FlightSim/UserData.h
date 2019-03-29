@@ -8,11 +8,12 @@
 
 typedef enum {BIRDS, EYESIGHT, RDMJG} data_t;	//los distintos datos que se pueden pedir o modificar en la estructura
 
-typedef struct {
+class userData_t {
+	public:
 	unsigned int birdCount;
 	double eyesight;
 	double randomJiggleLimit;
-}userData_t;
+};
 
 userData_t* createUserData();	//esta funcion crea una instancia de la estructura userData y la incializa con la constante EMPTY en cada campo
 bool setUserData(userData_t* userData, data_t field, double value);	//esta funcion modifica el dato seleccionado con el valor recibido por argumento
