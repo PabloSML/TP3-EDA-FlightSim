@@ -115,6 +115,16 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="Callback.h" />
+    <ClInclude Include="parser.h" />
+    <ClInclude Include="Random.h" />
+    <ClInclude Include="UserData.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="Callback.c" />
+    <ClCompile Include="parser.c" />
+    <ClCompile Include="Random.c" />
+    <ClCompile Include="UserData.c" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
