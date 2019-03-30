@@ -169,7 +169,7 @@ static void up_down(const char& direction,userData* myinfo, tweety* flock)
 {
 	if (modifier == 'V')
 	{
-		for (int i = 0; i < myinfo->getBirdCount(); i++)
+		for (unsigned int i = 0; i < myinfo->getBirdCount(); i++)
 		{
 			if (direction == UP)
 			{

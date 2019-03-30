@@ -13,8 +13,9 @@
 
 #define HEIGHT 70
 #define WIDTH 100
+#define GROUP_SPEED 2.0
 
-int main(int argc, char* argv[])
+int main(int argc, const char* argv[])
 {
 	randomize();					//Seed para nros random
 
@@ -29,7 +30,21 @@ int main(int argc, char* argv[])
 		{
 			tweety* flock = new (std::nothrow) tweety[myinfo.getBirdCount()];
 
-			//randomize segun modo (falta modo)
+			if (myinfo.getMode() == 1)
+			{
+				for (unsigned int i = 0; i < myinfo.getBirdCount(); i++)
+				{
+					flock[i].randomize(WIDTH, HEIGHT, GROUP_SPEED);
+				}
+			}
+			else
+			{
+				for (unsigned int i = 0; i < myinfo.getBirdCount(); i++)
+				{
+					flock[i].randomize(WIDTH, HEIGHT);
+				}
+			}
+
 
 			while (!quit)
 			{
@@ -37,16 +52,16 @@ int main(int argc, char* argv[])
 				switch (whatsNext)
 				{
 					case ITSTIME:
-										for (int i = 0; i < myinfo.getBirdCount(); i++)
+										for (unsigned int i = 0; i < myinfo.getBirdCount(); i++)
 										{
 											flock[i].project(flock, myinfo.getBirdCount(), myinfo.getRandomJiggleLimit(), myinfo.getEyesight());
 										}
-										for (int i = 0; i < myinfo.getBirdCount(); i++)
+										for (unsigned int i = 0; i < myinfo.getBirdCount(); i++)
 										{
 											flock[i].move(HEIGHT, WIDTH);
 										}
 										draw_birds(&myinfo, flock);
-										//tick_count++;
+										//tick_count++; en principio no creo que haya que contar cuanto tiempo pasa...
 										break;
 
 					case '1':case '2':case 'E':case 'J':case 'V': case UP:case DOWN:
@@ -59,11 +74,13 @@ int main(int argc, char* argv[])
 					default:			break;
 				}
 			}
+
+			delete[] flock;
 		}
 		destroy_all();
 
 	}
 
-	return 1;
+	return 0;
 }
 
