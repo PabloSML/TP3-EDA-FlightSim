@@ -1,4 +1,9 @@
 #pragma once
+
+#define HEIGHT 70
+#define WIDTH 100
+#define GROUP_SPEED 0.5
+
 #define UP 84 //Valor igual al de allegro pero con nombre mas corto
 #define DOWN 85 //Valor igual al de allegro pero con nombre mas corto
 #define ITSTIME 1 //Constante para saber que es el timer

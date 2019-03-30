@@ -11,10 +11,6 @@
 #include "Tweety.h"
 #include "Drawing.h"
 
-#define HEIGHT 70
-#define WIDTH 100
-#define GROUP_SPEED 0.5
-
 int main(int argc, const char* argv[])
 {
 	randomize();					//Seed para nros random
@@ -61,7 +57,6 @@ int main(int argc, const char* argv[])
 											flock[i].move(HEIGHT, WIDTH);
 										}
 										draw_birds(&myinfo, flock);
-										//tick_count++; en principio no creo que haya que contar cuanto tiempo pasa...
 										break;
 
 					case '1':case '2':case 'E':case 'J':case 'V': case UP:case DOWN:

@@ -160,7 +160,24 @@ void modify(const char& key, userData* myinfo, tweety* flock)
 {
 	switch (key)
 	{
-	case '1': case '2': /*ALGO VA ACA PERO NO SE QUE*/ break;
+	case '1':
+		myinfo->setMode(1);
+		for (unsigned int i = 0; i < myinfo->getBirdCount(); i++)
+		{
+			flock[i].randomize(WIDTH, HEIGHT, GROUP_SPEED);
+		}
+		al_clear_to_color(SKY_COLOR);
+		al_flip_display();
+	break;
+	case '2':
+		myinfo->setMode(2);
+		for (unsigned int i = 0; i < myinfo->getBirdCount(); i++)
+		{
+			flock[i].randomize(WIDTH, HEIGHT);
+		}
+		al_clear_to_color(SKY_COLOR);
+		al_flip_display();
+		break;
 	case 'E': case 'V': case 'J': modifier = key; break;
 	case UP: case DOWN: up_down(key, myinfo, flock); break;
 	default:	break;
