@@ -12,15 +12,17 @@
 #include "Drawing.h"
  /************************** DEFINICIONES **************************************/
 #define FPS 60.0               //frames p/second
+#define DISP_MULT 10		//multiplicador
 #define W_DIS 100          //ancho de imagen base
 #define H_DIS 70           //alto de imagen base
-#define BIRD_R 1			//Radio del pajaro
+#define BIRD_R 0.5			//Radio del pajaro
 #define SKY_COLOR al_color_name("dodgerblue") //color del fondo
 #define BIRD_COLOR al_color_name("chocolate") //color de los pajaros
 #define UP 84 //Valor igual al de allegro pero con nombre mas corto
 #define DOWN 85 //Valor igual al de allegro pero con nombre mas corto
 #define ITSTIME 1 //Constante para saber que es el timer
 #define DO_EXIT	'Q' //Valor para cerrar el programa
+#define INVALID_KEY 0 //Valor que devuelve si se presiona una tecla indebida
 /***************************** VARIABLES **************************************/
 static ALLEGRO_DISPLAY *display = NULL;
 static ALLEGRO_EVENT_QUEUE *event_queue = NULL;
@@ -72,7 +74,7 @@ int init_all(void)
 		return FAILIURE;
 	}
 	// Inicializo el display
-	display = al_create_display(W_DIS,H_DIS);
+	display = al_create_display(W_DIS*DISP_MULT, H_DIS*DISP_MULT);
 	if (display == NULL)
 	{
 		printf("failed to create display!\n");
@@ -134,7 +136,7 @@ char itstime(void)
 				case ALLEGRO_KEY_Q: event = DO_EXIT;	break;
 				case ALLEGRO_KEY_UP: event = UP;		break;
 				case ALLEGRO_KEY_DOWN: event = DOWN;	break;
-				default:	break;
+				default:	event = INVALID_KEY;		break;
 			}
 		}
 		else if (ev.type == ALLEGRO_EVENT_KEY_UP)    //soltar tecla
@@ -211,7 +213,7 @@ void draw_birds(userData* myinfo, tweety* flock)
 	for (int i = 0; i < myinfo->getBirdCount(); i++)
 	{
 		point* tempPos = flock[i].getPos();
-		al_draw_filled_circle(tempPos->getPosX(), tempPos->getPosY(), BIRD_R, BIRD_COLOR);
+		al_draw_filled_circle(tempPos->getPosX()*DISP_MULT, tempPos->getPosY()*DISP_MULT, BIRD_R*DISP_MULT, BIRD_COLOR);
 	}
 	al_flip_display();
 }

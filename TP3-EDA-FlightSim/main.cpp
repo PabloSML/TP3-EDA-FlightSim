@@ -13,7 +13,7 @@
 
 #define HEIGHT 70
 #define WIDTH 100
-#define GROUP_SPEED 2.0
+#define GROUP_SPEED 0.5
 
 int main(int argc, const char* argv[])
 {
