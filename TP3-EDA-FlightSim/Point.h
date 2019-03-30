@@ -12,6 +12,8 @@ public:
 
 	void offset(double offsetX, double offsetY);
 
+	double distanceTo(point* p);
+
 private:
 	double posx;
 	double posy;

@@ -3,6 +3,8 @@
 #define DOWN 85 //Valor igual al de allegro pero con nombre mas corto
 #define ITSTIME 1 //Constante para saber que es el timer
 #define DO_EXIT	'Q' //Valor para cerrar el programa
+#define SUCCESS 1
+#define FAILIURE 0
 
 //INIT_ALL inicializa todo lo necesario para el trabajo,
 // devuelve 0 si no pudo cargaralgo y 1 si fue exitoso
@@ -29,4 +31,6 @@ char itstime(void);
 //					- myinfo: varaible con informacion util para otra funcion
 //					- birds: varaible con informacion util para otra funcion
 //		DEVUELVE:	...
-void modify(const char& key, userData_t* myinfo, tweety* birds);
+void modify(const char& key, userData* myinfo, tweety* birds);
+
+void draw_birds(userData* myinfo, tweety* flock);

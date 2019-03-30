@@ -1,88 +1,181 @@
 #include <stdlib.h>
 #include "UserData.h"
+#define _USE_MATH_DEFINES
+#include <cmath>
 
-//esta funcion crea una instancia de la estructura userData y la incializa con la constante EMPTY en cada campo
-userData_t* createUserData()
+#define EYESIGHT_DELTA 1.0
+#define MIN_EYESIGHT  0.0
+#define MAX_EYESIGHT 70.0
+#define RDMJL_DELTA (10.0 * 2*M_PI / 360.0) //10 grados
+#define MIN_RDMJL 0.0
+#define MAX_RDMJL (2.0*M_PI)
+
+unsigned int
+userData::getBirdCount()
 {
-	userData_t* data = NULL;
-	data = (userData_t*)malloc(sizeof(userData_t));
-	if (data != NULL)
-	{
-		data->birdCount = EMPTY;
-		data->eyesight = EMPTY;
-		data->randomJiggleLimit = EMPTY;
-	}
-	return data;
+	return birdCount;
 }
 
-//esta funcion modifica el dato seleccionado con el valor recibido por argumento
-bool setUserData(userData_t* userData, data_t field, double value)
+double
+userData::getEyesight()
+{
+	return eyesight;
+}
+
+double
+userData::getRandomJiggleLimit()
+{
+	return randomJiggleLimit;
+}
+
+int
+userData::getMode()
+{
+	return mode;
+}
+
+bool 
+userData::setBirdCount(double value)
 {
 	bool success = false;
 
-	switch (field)
+	if (birdCount == EMPTY)
 	{
-	case BIRDS:
-		if (!(userData->birdCount))
-		{
-			userData->birdCount = (unsigned int)value;
-			success = true;
-		}
-		break;
-	case EYESIGHT:
-		if (!(userData->eyesight))
-		{
-			userData->eyesight = value;
-			success = true;
-		}
-		break;
-	case RDMJG:
-		if (!(userData->randomJiggleLimit))
-		{
-			userData->randomJiggleLimit = value;
-			success = true;
-		}
-		break;
+		birdCount = value;
+		success = true;
 	}
 
 	return success;
 }
 
-//esta funcion devuelve el dato especificado
-double getUserData(userData_t* userData, data_t field)
+bool 
+userData::setEyesight(double value)
 {
-	switch (field)
+	bool success = false;
+
+	if (eyesight == EMPTY)
 	{
-	case BIRDS:
-		return userData->birdCount;
-		break;
-	case EYESIGHT:
-		return userData->eyesight;
-		break;
-	case RDMJG:
-		return userData->randomJiggleLimit;
-		break;
-	} 
+		eyesight = value;
+		success = true;
+	}
+
+	return success;
+}
+
+bool 
+userData::setRandomJiggleLimit(double value)
+{
+	bool success = false;
+
+	if (randomJiggleLimit == EMPTY)
+	{
+		randomJiggleLimit = value;
+		success = true;
+	}
+
+	return success;
+}
+
+bool
+userData::setMode(int value)
+{
+	bool success = false;
+
+	if (mode == EMPTY)
+	{
+		mode = value;
+		success = true;
+	}
+
+	return success;
+}
+
+bool
+userData::incEyesight()
+{
+	if (eyesight != MAX_EYESIGHT)
+	{
+		eyesight += EYESIGHT_DELTA;
+		if (eyesight > MAX_EYESIGHT)
+		{
+			eyesight = MAX_EYESIGHT;
+		}
+		return true;
+	}
+	else
+	{
+		return false;
+	}
+}
+
+bool
+userData::decEyesight()
+{
+	if (eyesight != MIN_EYESIGHT)
+	{
+		eyesight -= EYESIGHT_DELTA;
+		if (eyesight < MIN_EYESIGHT)
+		{
+			eyesight = MIN_EYESIGHT;
+		}
+		return true;
+	}
+	else
+	{
+		return false;
+	}
+}
+
+bool
+userData::incRDMJL()
+{
+	if (randomJiggleLimit != MAX_RDMJL)
+	{
+		randomJiggleLimit += RDMJL_DELTA;
+		if (randomJiggleLimit > MAX_RDMJL)
+		{
+			randomJiggleLimit = MAX_RDMJL;
+		}
+		return true;
+	}
+	else
+	{
+		return false;
+	}
+}
+
+bool
+userData::decRDMJL()
+{
+	if (randomJiggleLimit != MIN_RDMJL)
+	{
+		randomJiggleLimit -= RDMJL_DELTA;
+		if (randomJiggleLimit < MIN_RDMJL)
+		{
+			randomJiggleLimit = MIN_RDMJL;
+		}
+		return true;
+	}
+	else
+	{
+		return false;
+	}
 }
 
 //esta funcion devuelve 'true' si todos los datos han sido ingresados exitosamente, 'false' si no
-bool isDataFull(userData_t* data)
+bool 
+userData::isDataFull()
 {
 	bool dataFull = true;
 
-	if (data->birdCount == EMPTY)
+	if (birdCount == EMPTY)
 		dataFull = false;
-	if (data->eyesight == EMPTY)
+	if (eyesight == EMPTY)
 		dataFull = false;
-	if (data->randomJiggleLimit == EMPTY)
+	if (randomJiggleLimit == EMPTY)
+		dataFull = false;
+	if (mode == EMPTY)
 		dataFull = false;
 
 	return dataFull;
-}
-
-//esta funcion libera la memoria pedida por la estructura 
-void destroyUserData(userData_t* userData)
-{
-	free(userData);
-	userData = NULL;
 }

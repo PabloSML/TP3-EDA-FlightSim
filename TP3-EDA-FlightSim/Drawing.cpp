@@ -7,6 +7,7 @@
 #include <allegro5/allegro_primitives.h>
 #include <allegro5/allegro_color.h>
 #include "Tweety.h"
+#include "Point.h"
 #include "UserData.h"
 #include "Drawing.h"
  /************************** DEFINICIONES **************************************/
@@ -28,7 +29,7 @@ static ALLEGRO_EVENT ev;
 static char modifier = NULL; //puntero al valor que ay que modificar
 static bool oneclick = false;  //flag para evitar muchas lecturas apretando 1 vez
 /***************************** PROTOTIPOS **************************************/
-static void up_down(const char& direction, userData_t* myinfo, tweety* birds);
+static void up_down(const char& direction, userData* myinfo, tweety* birds);
 /***************************** FUNCIONES **************************************/
 int init_all(void)
 {
@@ -36,14 +37,14 @@ int init_all(void)
 	if (!al_init())
 	{
 		printf("Failed to initialize Allegro");
-		return 0;
+		return FAILIURE;
 	}
 	//TIMER
 	timer = al_create_timer(1.0 / FPS);
 	if (!timer)
 	{
 		printf("failed to create timer!\n");
-		return 0;
+		return FAILIURE;
 	}
 	//EVENT QUEUE
 	event_queue = al_create_event_queue();
@@ -51,13 +52,15 @@ int init_all(void)
 	{
 		printf("failed to create event_queue!\n");
 		al_destroy_timer(timer);
-		return 0;
+		return FAILIURE;
 	}
 	//KEYBOARD
 	if (!al_install_keyboard())
 	{
 		fprintf(stderr, "failed to initialize the keyboard\n");
-		return 0;
+		al_destroy_timer(timer);
+		al_destroy_event_queue(event_queue);
+		return FAILIURE;
 	}
 	//Inicializo primitivas
 	if (!al_init_primitives_addon())
@@ -66,7 +69,7 @@ int init_all(void)
 		al_destroy_event_queue(event_queue);
 		al_destroy_timer(timer);
 		al_uninstall_keyboard();
-		return 0;
+		return FAILIURE;
 	}
 	// Inicializo el display
 	display = al_create_display(W_DIS,H_DIS);
@@ -78,14 +81,14 @@ int init_all(void)
 		al_destroy_event_queue(event_queue);
 		al_shutdown_primitives_addon();
 		al_uninstall_keyboard();
-		return 0;
+		return FAILIURE;
 	}
 	al_register_event_source(event_queue, al_get_display_event_source(display));
 	al_register_event_source(event_queue, al_get_timer_event_source(timer));
 	al_register_event_source(event_queue, al_get_keyboard_event_source());
 	al_start_timer(timer);
-	return 1;
-	return 0;
+
+	return SUCCESS;
 }
 
 void destroy_all(void)
@@ -151,69 +154,64 @@ char itstime(void)
 }
 
 
-void modify(const char& key, userData_t* myinfo, tweety* birds)
+void modify(const char& key, userData* myinfo, tweety* flock)
 {
 	switch (key)
 	{
 	case '1': case '2': /*ALGO VA ACA PERO NO SE QUE*/ break;
 	case 'E': case 'V': case 'J': modifier = key; break;
-	case UP: case DOWN: up_down(key, myinfo, birds); break;
+	case UP: case DOWN: up_down(key, myinfo, flock); break;
 	default:	break;
 	}
 }
 
-static void up_down(const char& direction,userData_t* myinfo, tweety* birds)
+static void up_down(const char& direction,userData* myinfo, tweety* flock)
 {
 	if (modifier == 'V')
 	{
-		for (int i = 0; i < getUserData(myinfo,BIRDS); i++)
+		for (int i = 0; i < myinfo->getBirdCount(); i++)
 		{
 			if (direction == UP)
 			{
-				//birds[i].rise_speed();				//Faltan hacer en tweety.cpp, porque se tienen que hacer desde la clase
+				flock[i].incSpeed();
 			}
 			else
 			{
-				//birds[i].down_speed();
+				flock[i].decSpeed();
 			}
 		}
 	}
 	else if (modifier == 'E')
 	{
-		for (int i = 0; i < getUserData(myinfo, BIRDS); i++)
+		if (direction == UP)
 		{
-			if (direction == UP)
-			{
-				//birds[i].rise_eye();				//Faltan hacer en tweety.cpp, porque se tienen que hacer desde la clase
-			}
-			else
-			{
-				//birds[i].down_eye();
-			}
+			myinfo->incEyesight();
+		}
+		else
+		{
+			myinfo->decEyesight();
 		}
 	}
 	else if (modifier == 'J')
 	{
-		for (int i = 0; i < getUserData(myinfo, BIRDS); i++)
+		if (direction == UP)
 		{
-			if (direction == UP)
-			{
-				//birds[i].rise_rdmj();				//Faltan hacer en tweety.cpp, porque se tienen que hacer desde la clase
-			}
-			else
-			{
-				//birds[i].down_rdmj();
-			}
+			myinfo->incRDMJL();
+		}
+		else
+		{
+			myinfo->decRDMJL();
 		}
 	}
 }
 
-bool draw_birds(userData_t* myinfo, tweety* birds)
+void draw_birds(userData* myinfo, tweety* flock)
 {
 	al_clear_to_color(SKY_COLOR);
-	for (int i = 0; i < getUserData(myinfo, BIRDS); i++)
+	for (int i = 0; i < myinfo->getBirdCount(); i++)
 	{
-		//al_draw_filled_circle(birds[i].posx(), birds[i].posy(), BIRD_R, BIRD_COLOR); //FALTAN GETTERS
+		point* tempPos = flock[i].getPos();
+		al_draw_filled_circle(tempPos->getPosX(), tempPos->getPosY(), BIRD_R, BIRD_COLOR);
 	}
 	al_flip_display();
 }

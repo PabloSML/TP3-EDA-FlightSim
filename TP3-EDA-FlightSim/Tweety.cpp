@@ -3,12 +3,17 @@
 #include "Utilities.h"
 #define _USE_MATH_DEFINES
 #include <cmath>
+#include <stdbool.h>
+
+#define SPEED_DELTA 0.2
+#define MIN_SPEED 0.5
+#define MAX_SPEED 5.0
 
 //modo 1
 void
-tweety::randomize(unsigned int maxWidth, unsigned int maxHeight, double usrSpeed)
+tweety::randomize(unsigned int maxWidth, unsigned int maxHeight, double groupSpeed)
 {
-	speed = usrSpeed;
+	speed = groupSpeed;
 	pos.randomValue(maxHeight, maxWidth);
 	angle = randDoubleBetween(0.0, 2 * M_PI);
 }
@@ -30,13 +35,13 @@ tweety::project(tweety* flock, int birdCount, double randomJiggleLimit, double e
 
 	for (int i = 0; i < birdCount; i++)
 	{
-		if (inSight(flock[i], eyesight))
+		if (inSight(&(flock[i]), eyesight))
 		{
 			angleSum += flock[i].angle;
 			divider++;
 		}
 	}
-	newAngle = angleSum / divider + getRdmJiggle(divider, randomJiggleLimit);
+	newAngle = angleSum / divider + randDoubleBetween(0.0, randomJiggleLimit);
 
 }
 
@@ -62,4 +67,59 @@ tweety::move(unsigned int height, unsigned int width)
 
 	pos.offset(offsetX, offsetY);
 
+}
+
+point*
+tweety::getPos()
+{
+	return &pos;
+}
+
+bool
+tweety::incSpeed()
+{
+	if (speed != MAX_SPEED)
+	{
+		speed += SPEED_DELTA;
+		if (speed > MAX_SPEED)
+		{
+			speed = MAX_SPEED;
+		}
+		return true;
+	}
+	else
+	{
+		return false;
+	}
+}
+
+bool
+tweety::decSpeed()
+{
+	if (speed != MIN_SPEED)
+	{
+		speed -= SPEED_DELTA;
+		if (speed < MIN_SPEED)
+		{
+			speed = MIN_SPEED;
+		}
+		return true;
+	}
+	else
+	{
+		return false;
+	}
+}
+
+bool
+tweety::inSight(tweety* bird, double eyesight)
+{
+	if (pos.distanceTo(bird->getPos()) <= eyesight)
+	{
+		return true;
+	}
+	else
+	{
+		return false;
+	}
 }

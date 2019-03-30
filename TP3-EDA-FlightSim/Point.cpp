@@ -1,3 +1,4 @@
+#include <cmath>
 #include "Point.h"
 #include "Random.h"
 
@@ -11,8 +12,15 @@ point::randomValue(unsigned int maxHeight, unsigned int maxWidth)
 double point::getPosX() { return posx; }
 double point::getPosY() { return posy; }
 
-void point::offset(double offsetX, double offsetY)
+void 
+point::offset(double offsetX, double offsetY)
 {
 	posx += offsetX;
 	posy += offsetY;
+}
+
+double
+point::distanceTo(point* p)
+{
+	return sqrt(pow(posx - p->getPosX(), 2.0) + pow(posy - p->getPosY(), 2.0));
 }
