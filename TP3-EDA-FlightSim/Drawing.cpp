@@ -210,8 +210,10 @@ static void up_down(const char& direction,userData_t* myinfo, tweety* birds)
 
 bool draw_birds(userData_t* myinfo, tweety* birds)
 {
+	al_clear_to_color(SKY_COLOR);
 	for (int i = 0; i < getUserData(myinfo, BIRDS); i++)
 	{
 		//al_draw_filled_circle(birds[i].posx(), birds[i].posy(), BIRD_R, BIRD_COLOR); //FALTAN GETTERS
 	}
+	al_flip_display();
 }
