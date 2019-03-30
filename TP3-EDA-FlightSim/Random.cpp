@@ -1,6 +1,5 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include <time.h>
+#include <cstdlib>
+#include <ctime>
 #include "random.h"
 
 //Devuelve un valor entero pseudo-aleatorio entre a y b.

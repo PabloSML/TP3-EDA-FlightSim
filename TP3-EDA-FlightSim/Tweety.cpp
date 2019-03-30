@@ -1,9 +1,8 @@
 #include "Tweety.h"
 #include "Random.h"
-#include "Utilities.h"
 #define _USE_MATH_DEFINES
-#include <cmath>
-#include <stdbool.h>
+#include <math.h>
+#include <cstdbool>
 
 #define SPEED_DELTA 0.2
 #define MIN_SPEED 0.5

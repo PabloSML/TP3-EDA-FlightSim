@@ -1,8 +1,8 @@
 /*
 parser.h
-Grupo 3:
-Terra Brandes Britos, Ignacio
-Vidmar, Lucas
+Grupo 1:
+Dutriez, Philippe
+Dalla Lasta, Pedro
 Smolkin, Pablo
 */
 

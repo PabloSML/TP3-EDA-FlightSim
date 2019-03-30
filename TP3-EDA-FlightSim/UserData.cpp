@@ -1,7 +1,7 @@
-#include <stdlib.h>
+#include <cstdlib>
 #include "UserData.h"
 #define _USE_MATH_DEFINES
-#include <cmath>
+#include <math.h>
 
 #define EYESIGHT_DELTA 1.0
 #define MIN_EYESIGHT  0.0

@@ -1,15 +1,19 @@
 /************************ LIBRERIAS ************************/
-#include <stdio.h>
-#include <stdlib.h>
+#include <iostream>
+#include <cstdlib>
 #include <new>
-#include <stdbool.h>
-#include <time.h>
+#include <cstdbool>
+#include <ctime>
 #include "Random.h"
 #include "parser.h"
 #include "Callback.h"
 #include "UserData.h"
 #include "Tweety.h"
 #include "Drawing.h"
+
+#define INPUT_NEEDED 4
+
+using namespace std;
 
 int main(int argc, const char* argv[])
 {
@@ -22,7 +26,7 @@ int main(int argc, const char* argv[])
 		bool quit = false;
 		char whatsNext;				//Variable con la informacion de la event_queue
 
-		if (parseCmdLine(argc, argv, parseCallBack, &myinfo))
+		if (parseCmdLine(argc, argv, parseCallBack, &myinfo) == INPUT_NEEDED)
 		{
 			tweety* flock = new (std::nothrow) tweety[myinfo.getBirdCount()];
 
@@ -71,6 +75,11 @@ int main(int argc, const char* argv[])
 			}
 
 			delete[] flock;
+		}
+		else
+		{
+			cout << "Input Error\n";
+			getchar();
 		}
 		destroy_all();
 

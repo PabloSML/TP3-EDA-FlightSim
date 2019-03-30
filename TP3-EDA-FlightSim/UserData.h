@@ -2,7 +2,7 @@
 #ifndef USERDATA_H
 #define USERDATA_H
 
-#include <stdbool.h>
+#include <cstdbool>
 
 #define EMPTY 0		//los campos de la clase userData se inicializan con esta constante
 

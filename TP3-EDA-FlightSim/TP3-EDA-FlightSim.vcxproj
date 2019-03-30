@@ -128,7 +128,6 @@
     <ClInclude Include="Random.h" />
     <ClInclude Include="Tweety.h" />
     <ClInclude Include="UserData.h" />
-    <ClInclude Include="Utilities.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Callback.cpp" />
@@ -139,7 +138,6 @@
     <ClCompile Include="Random.cpp" />
     <ClCompile Include="Tweety.cpp" />
     <ClCompile Include="UserData.cpp" />
-    <ClCompile Include="Utilities.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

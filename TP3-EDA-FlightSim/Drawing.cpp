@@ -1,7 +1,7 @@
 /********************** LIBRERIAS UTILIZADAS ***********************************/
-#include <stdint.h>
-#include <stdio.h>
-#include <stdbool.h>
+#include <iostream>
+#include <cstdint>
+#include <cstdbool>
 #include <allegro5/allegro.h>
 #include <allegro5/allegro_image.h>
 #include <allegro5/allegro_primitives.h>
@@ -10,6 +10,7 @@
 #include "Point.h"
 #include "UserData.h"
 #include "Drawing.h"
+using namespace std;
  /************************** DEFINICIONES **************************************/
 #define FPS 60.0               //frames p/second
 #define DISP_MULT 10		//multiplicador
@@ -38,28 +39,28 @@ int init_all(void)
 	// Instalamos Allegro
 	if (!al_init())
 	{
-		printf("Failed to initialize Allegro");
+		cout << "Failed to initialize Allegro\n";
 		return FAILIURE;
 	}
 	//TIMER
 	timer = al_create_timer(1.0 / FPS);
 	if (!timer)
 	{
-		printf("failed to create timer!\n");
+		cout << "Failed to create timer!\n";
 		return FAILIURE;
 	}
 	//EVENT QUEUE
 	event_queue = al_create_event_queue();
 	if (!event_queue)
 	{
-		printf("failed to create event_queue!\n");
+		cout << "Failed to create event_queue!\n";
 		al_destroy_timer(timer);
 		return FAILIURE;
 	}
 	//KEYBOARD
 	if (!al_install_keyboard())
 	{
-		fprintf(stderr, "failed to initialize the keyboard\n");
+		cout << "Failed to initialize the keyboard\n";
 		al_destroy_timer(timer);
 		al_destroy_event_queue(event_queue);
 		return FAILIURE;
@@ -67,7 +68,7 @@ int init_all(void)
 	//Inicializo primitivas
 	if (!al_init_primitives_addon())
 	{
-		printf("failed to initialize primitives!\n");
+		cout << "Failed to initialize primitives!\n";
 		al_destroy_event_queue(event_queue);
 		al_destroy_timer(timer);
 		al_uninstall_keyboard();
@@ -77,7 +78,7 @@ int init_all(void)
 	display = al_create_display(W_DIS*DISP_MULT, H_DIS*DISP_MULT);
 	if (display == NULL)
 	{
-		printf("failed to create display!\n");
+		cout << "Failed to create display!\n";
 		al_destroy_timer(timer);
 		al_destroy_display(display);
 		al_destroy_event_queue(event_queue);

@@ -1,9 +1,11 @@
-#include <stdio.h>
-#include <string.h>
-#include <stdlib.h>
-#include <math.h>
+#include <iostream>
+#include <cstring>
+#include <cstdlib>
+#include <cmath>
 #include "Callback.h"
 #include "UserData.h"
+
+using namespace std;
 
 int parseCallBack(const char* key, const char* value, void* usrData) //chequea si los datos ingresados por la linea de comandos son validos
 {
@@ -17,7 +19,7 @@ int parseCallBack(const char* key, const char* value, void* usrData) //chequea s
 		{
 			if (!(myData->setBirdCount(tempValue)))
 			{
-				printf("%s\n", "Error: Option 'Birds' has been set more than once");
+				cout << "Error: Option 'Birds' has been set more than once\n";
 				return CB_ERR;
 			}
 		}
@@ -25,7 +27,7 @@ int parseCallBack(const char* key, const char* value, void* usrData) //chequea s
 		{
 			if (!(myData->setEyesight(tempValue)))
 			{
-				printf("%s\n", "Error: Option 'Eyesight' has been set more than once");
+				cout << "Error: Option 'Eyesight' has been set more than once\n";
 				return CB_ERR;
 			}
 		}
@@ -33,7 +35,7 @@ int parseCallBack(const char* key, const char* value, void* usrData) //chequea s
 		{
 			if (!(myData->setRandomJiggleLimit(tempValue)))
 			{
-				printf("%s\n", "Error: Option 'randomJiggleLimit' has been set more than once");
+				cout << "Error: Option 'randomJiggleLimit' has been set more than once\n";
 				return CB_ERR;
 			}
 		}
@@ -41,13 +43,13 @@ int parseCallBack(const char* key, const char* value, void* usrData) //chequea s
 		{
 			if (!(myData->setMode(tempValue)))
 			{
-				printf("%s\n", "Error: Option mode' has been set more than once");
+				cout << "Error: Option mode' has been set more than once\n";
 				return CB_ERR;
 			}
 		}
 		else //option not valid
 		{
-			printf("%s\n", "Invalid Option");
+			cout << "Invalid Option\n";
 			getchar();				//pemite que el usuario visualize su codigo de error
 			return CB_ERR;
 		}
@@ -55,7 +57,7 @@ int parseCallBack(const char* key, const char* value, void* usrData) //chequea s
 
 	else
 	{
-		printf("%s\n", "This program does not accept parameters. Invalid input");
+		cout << "This program does not accept parameters. Invalid input\n";
 		getchar();		//pemite que el usuario visualize su codigo de error
 		return CB_ERR;
 	}

@@ -1,14 +1,16 @@
 /*
 parser.c
-Grupo 3:
-Terra Brandes Britos, Ignacio
-Vidmar, Lucas
+Grupo 1:
+Dutriez, Philippe
+Dalla Lasta, Pedro
 Smolkin, Pablo
 */
 
-#include <ctype.h>
-#include <stdio.h>
+#include <cctype>
+#include <iostream>
 #include "parser.h"
+
+using namespace std;
 
 /*
 Esta funcion valida la forma de lo ingresado por linea de comandos y utiliza una funcion recibida para validar su coherencia
@@ -35,17 +37,17 @@ int parseCmdLine(int argc, char const *argv[], pCallback checkInputs, void * use
 		{
 			if (argv[i][1] == '\0')	//Analiza si el caracter siguiente al guion es vacio
 			{
-				printf("%s\n", "Missing Key");
+				cout << "Missing Key\n";
 				return ERROR;
 			}
 			else if (i == argc - 1)	//Analiza si no existe valor para la opcion actual
 			{
-				printf("%s\n", "Missing Value");
+				cout << "Missing Value\n";
 				return ERROR;
 			}
 			else if (!(checkInputs(argv[i] + 1, argv[i + 1], userData)))	//Analiza la validez de la opcion segun lo determinado por el Callback
 			{
-				printf("%s\n", "Program terminated due to invalid option/value.");
+				cout << "Program terminated due to invalid option/value.\n";
 				return ERROR;
 			}
 			else
@@ -55,7 +57,7 @@ int parseCmdLine(int argc, char const *argv[], pCallback checkInputs, void * use
 		{
 			if (!(checkInputs(NULL, argv[i], userData)))	//Analiza la validez del parametro segun lo determinado por el Callback
 			{
-				printf("%s\n", "Program terminated due to invalid parameter");
+				cout << "Program terminated due to invalid parameter\n";
 				return ERROR;
 			}
 		}
