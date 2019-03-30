@@ -122,6 +122,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="Callback.h" />
+    <ClInclude Include="Drawing.h" />
     <ClInclude Include="parser.h" />
     <ClInclude Include="Point.h" />
     <ClInclude Include="Random.h" />
@@ -131,6 +132,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Callback.cpp" />
+    <ClCompile Include="Drawing.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="parser.cpp" />
     <ClCompile Include="Point.cpp" />
