@@ -18,7 +18,6 @@ using namespace std;
 int main(int argc, const char* argv[])
 {
 	randomize();					//Seed para nros random
-
 	if (init_all())							//Inicializo allegro
 	{
 		userData myinfo;
@@ -63,7 +62,7 @@ int main(int argc, const char* argv[])
 										draw_birds(&myinfo, flock);
 										break;
 
-					case '1':case '2':case 'E':case 'J':case 'V': case UP:case DOWN:
+					case '1':case '2':case 'E':case 'J':case 'V': case 'D':case UP:case DOWN:
 										modify(whatsNext, &myinfo, flock);
 										break;
 					case DO_EXIT:

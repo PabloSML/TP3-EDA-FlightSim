@@ -6,13 +6,15 @@
 #include <allegro5/allegro_image.h>
 #include <allegro5/allegro_primitives.h>
 #include <allegro5/allegro_color.h>
+#include <allegro5/allegro_font.h>
+#include <allegro5/allegro_ttf.h>
 #include "Tweety.h"
 #include "Point.h"
 #include "UserData.h"
 #include "Drawing.h"
 using namespace std;
  /************************** DEFINICIONES **************************************/
-#define FPS 60.0               //frames p/second
+#define FPS 40.0               //frames p/second
 #define DISP_MULT 10		//multiplicador
 #define W_DIS 100          //ancho de imagen base
 #define H_DIS 70           //alto de imagen base
@@ -33,6 +35,7 @@ static char modifier = NULL; //puntero al valor que ay que modificar
 static bool oneclick = false;  //flag para evitar muchas lecturas apretando 1 vez
 /***************************** PROTOTIPOS **************************************/
 static void up_down(const char& direction, userData* myinfo, tweety* birds);
+static void show_stats(userData* myinfo);
 /***************************** FUNCIONES **************************************/
 int init_all(void)
 {
@@ -86,6 +89,29 @@ int init_all(void)
 		al_uninstall_keyboard();
 		return FAILIURE;
 	}
+	if (!al_init_font_addon())
+	{
+		cout << "Failed to init font!\n";
+		al_destroy_display(display);
+		al_destroy_timer(timer);
+		al_destroy_display(display);
+		al_destroy_event_queue(event_queue);
+		al_shutdown_primitives_addon();
+		al_uninstall_keyboard();
+		return FAILIURE;
+	}
+	if (!al_init_ttf_addon())
+	{
+		cout << "Failed to init font!\n";
+		al_destroy_display(display);
+		al_destroy_timer(timer);
+		al_destroy_display(display);
+		al_destroy_event_queue(event_queue);
+		al_shutdown_primitives_addon();
+		al_uninstall_keyboard();
+		al_shutdown_ttf_addon();
+		return FAILIURE;
+	}
 	al_register_event_source(event_queue, al_get_display_event_source(display));
 	al_register_event_source(event_queue, al_get_timer_event_source(timer));
 	al_register_event_source(event_queue, al_get_keyboard_event_source());
@@ -98,11 +124,13 @@ void destroy_all(void)
 {
 	if (display != NULL)
 	{
+		al_shutdown_font_addon();
 		al_shutdown_primitives_addon();
 		al_destroy_timer(timer);
 		al_destroy_display(display);
 		al_destroy_event_queue(event_queue);
 		al_uninstall_keyboard();
+		al_shutdown_ttf_addon();
 		timer = NULL;
 		display = NULL;
 		event_queue = NULL;
@@ -134,6 +162,7 @@ char itstime(void)
 				case ALLEGRO_KEY_E: event = 'E';		break;
 				case ALLEGRO_KEY_V: event = 'V';		break;
 				case ALLEGRO_KEY_J: event = 'J';		break;
+				case ALLEGRO_KEY_D: event = 'D';		break;
 				case ALLEGRO_KEY_Q: event = DO_EXIT;	break;
 				case ALLEGRO_KEY_UP: event = UP;		break;
 				case ALLEGRO_KEY_DOWN: event = DOWN;	break;
@@ -180,6 +209,7 @@ void modify(const char& key, userData* myinfo, tweety* flock)
 		al_flip_display();
 		break;
 	case 'E': case 'V': case 'J': modifier = key; break;
+	case 'D': show_stats(myinfo); break;
 	case UP: case DOWN: up_down(key, myinfo, flock); break;
 	default:	break;
 	}
@@ -225,6 +255,24 @@ static void up_down(const char& direction,userData* myinfo, tweety* flock)
 	}
 }
 
+static void show_stats(userData* myinfo)
+{
+	ALLEGRO_COLOR txtcolor = al_color_name("black");
+	ALLEGRO_FONT *font = NULL;
+	font = al_load_font("FreeMono.ttf",DISP_MULT*2,0);
+	if (font != NULL)
+	{
+//		al_clear_to_color(al_color_name("black"));
+//		if (myinfo->getMode() == 1)
+//			al_draw_textf(font, txtcolor,DISP_MULT,DISP_MULT*3,0,"Global speed:%f",speed);
+		al_draw_textf(font, txtcolor, DISP_MULT, DISP_MULT * 3, 0, "Eyesight:%f", myinfo->getEyesight());
+		al_draw_textf(font, txtcolor, DISP_MULT, DISP_MULT * 6, 0, "RandomjiggleLimit:%f", myinfo->getRandomJiggleLimit());
+		al_flip_display();
+		al_rest(2.5);
+		al_destroy_font(font);
+	}
+
+}
 void draw_birds(userData* myinfo, tweety* flock)
 {
 	al_clear_to_color(SKY_COLOR);

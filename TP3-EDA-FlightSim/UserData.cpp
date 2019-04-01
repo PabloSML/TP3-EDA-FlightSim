@@ -8,7 +8,7 @@
 #define MAX_EYESIGHT 70.0
 #define RDMJL_DELTA (10.0 * 2*M_PI / 360.0) //10 grados
 #define MIN_RDMJL 0.0
-#define MAX_RDMJL (2.0*M_PI)
+#define MAX_RDMJL (M_PI)
 
 unsigned int
 userData::getBirdCount()

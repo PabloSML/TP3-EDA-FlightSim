@@ -66,4 +66,9 @@
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
+  <ItemGroup>
+    <Font Include="FreeMono.ttf">
+      <Filter>Resource Files</Filter>
+    </Font>
+  </ItemGroup>
 </Project>
