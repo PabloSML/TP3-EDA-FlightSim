@@ -5,6 +5,7 @@
 #include <cstdbool>
 
 #define EMPTY 0		//los campos de la clase userData se inicializan con esta constante
+#define MAX_BIRDCOUNT 150	//se agrega una cota arbitraria a la cantidad de pajaros para prevenir incorrecto funcionamiento en computadoras mas lentas
 #define EYESIGHT_DELTA 1.0
 #define MIN_EYESIGHT  0.0
 #define MAX_EYESIGHT 70.0

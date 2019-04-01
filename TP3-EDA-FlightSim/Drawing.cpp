@@ -19,7 +19,6 @@ using namespace std;
 #define W_DIS 100          //ancho de imagen base
 #define H_DIS 70           //alto de imagen base
 #define BIRD_R 0.5			//Radio del pajaro
-#define SKY_COLOR al_color_name("dodgerblue") //color del fondo
 #define BIRD_COLOR al_color_name("chocolate") //color de los pajaros
 #define UP 84 //Valor igual al de allegro pero con nombre mas corto
 #define DOWN 85 //Valor igual al de allegro pero con nombre mas corto
@@ -31,11 +30,7 @@ static ALLEGRO_DISPLAY *display = NULL;
 static ALLEGRO_EVENT_QUEUE *event_queue = NULL;
 static ALLEGRO_TIMER *timer = NULL;
 static ALLEGRO_EVENT ev;
-static char modifier = NULL; //puntero al valor que hay que modificar
 static bool oneclick = false;  //flag para evitar muchas lecturas apretando 1 vez
-/***************************** PROTOTIPOS **************************************/
-static void up_down(const char& direction, userData* myinfo, tweety* birds);
-static void show_stats(userData* myinfo);
 /***************************** FUNCIONES **************************************/
 int init_all(void)
 {
@@ -138,7 +133,7 @@ void destroy_all(void)
 }
 
 
-char itstime(void)
+char eventGet(void)
 {
 	char event;
 	if (al_get_next_event(event_queue, &ev)) //Toma un evento de la cola
@@ -186,85 +181,13 @@ char itstime(void)
 }
 
 
-void modify(const char& key, userData* myinfo, tweety* flock)
-{
-	switch (key)
-	{
-	case '1':
-		myinfo->setMode(1);
-		for (unsigned int i = 0; i < myinfo->getBirdCount(); i++)
-		{
-			flock[i].randomize(WIDTH, HEIGHT, GROUP_SPEED);
-		}
-		al_clear_to_color(SKY_COLOR);
-		al_flip_display();
-	break;
-	case '2':
-		myinfo->setMode(2);
-		for (unsigned int i = 0; i < myinfo->getBirdCount(); i++)
-		{
-			flock[i].randomize(WIDTH, HEIGHT);
-		}
-		al_clear_to_color(SKY_COLOR);
-		al_flip_display();
-		break;
-	case 'E': case 'V': case 'J': modifier = key; break;
-	case 'D': show_stats(myinfo); break;
-	case UP: case DOWN: up_down(key, myinfo, flock); break;
-	default:	break;
-	}
-}
-
-static void up_down(const char& direction,userData* myinfo, tweety* flock)
-{
-	if (modifier == 'V')
-	{
-		for (unsigned int i = 0; i < myinfo->getBirdCount(); i++)
-		{
-			if (direction == UP)
-			{
-				flock[i].incSpeed();
-			}
-			else
-			{
-				flock[i].decSpeed();
-			}
-		}
-	}
-	else if (modifier == 'E')
-	{
-		if (direction == UP)
-		{
-			myinfo->incEyesight();
-		}
-		else
-		{
-			myinfo->decEyesight();
-		}
-	}
-	else if (modifier == 'J')
-	{
-		if (direction == UP)
-		{
-			myinfo->incRDMJL();
-		}
-		else
-		{
-			myinfo->decRDMJL();
-		}
-	}
-}
-
-static void show_stats(userData* myinfo)
+void show_stats(userData* myinfo)
 {
 	ALLEGRO_COLOR txtcolor = al_color_name("black");
 	ALLEGRO_FONT *font = NULL;
 	font = al_load_font("FreeMono.ttf",DISP_MULT*2,0);
 	if (font != NULL)
 	{
-//		al_clear_to_color(al_color_name("black"));
-//		if (myinfo->getMode() == 1)
-//			al_draw_textf(font, txtcolor,DISP_MULT,DISP_MULT*3,0,"Global speed:%f",speed);
 		al_draw_textf(font, txtcolor, DISP_MULT, DISP_MULT * 3, 0, "Eyesight:%f", myinfo->getEyesight());
 		al_draw_textf(font, txtcolor, DISP_MULT, DISP_MULT * 6, 0, "RandomjiggleLimit:%f", myinfo->getRandomJiggleLimit());
 		al_flip_display();
@@ -276,7 +199,7 @@ static void show_stats(userData* myinfo)
 void draw_birds(userData* myinfo, tweety* flock)
 {
 	al_clear_to_color(SKY_COLOR);
-	for (int i = 0; i < myinfo->getBirdCount(); i++)
+	for (unsigned int i = 0; i < myinfo->getBirdCount(); i++)
 	{
 		point* tempPos = flock[i].getPos();
 		al_draw_filled_circle(tempPos->getPosX()*DISP_MULT, tempPos->getPosY()*DISP_MULT, BIRD_R*DISP_MULT, BIRD_COLOR);

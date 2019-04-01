@@ -127,6 +127,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="Backend_aux.h" />
     <ClInclude Include="Callback.h" />
     <ClInclude Include="Drawing.h" />
     <ClInclude Include="parser.h" />
@@ -136,6 +137,7 @@
     <ClInclude Include="UserData.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Backend_aux.cpp" />
     <ClCompile Include="Callback.cpp" />
     <ClCompile Include="Drawing.cpp" />
     <ClCompile Include="main.cpp" />

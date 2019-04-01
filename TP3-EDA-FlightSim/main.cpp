@@ -10,6 +10,7 @@
 #include "UserData.h"
 #include "Tweety.h"
 #include "Drawing.h"
+#include "Backend_aux.h"
 
 #define INPUT_NEEDED 4
 
@@ -18,16 +19,21 @@ using namespace std;
 int main(int argc, const char* argv[])
 {
 	randomize();					//Seed para nros random
+
 	if (init_all())							//Inicializo allegro
 	{
 		userData myinfo;
 
-		bool quit = false;
 		char whatsNext;				//Variable con la informacion de la event_queue
 
-		if (parseCmdLine(argc, argv, parseCallBack, &myinfo) == INPUT_NEEDED)
+		int parseResult = parseCmdLine(argc, argv, parseCallBack, &myinfo);
+
+		if (parseResult == INPUT_NEEDED)
 		{
 			tweety* flock = new (std::nothrow) tweety[myinfo.getBirdCount()];
+
+			bool quit = false;
+			char modifier;
 
 			if (myinfo.getMode() == 1)
 			{
@@ -47,37 +53,33 @@ int main(int argc, const char* argv[])
 
 			while (!quit)
 			{
-				whatsNext = itstime();
-				switch (whatsNext)
-				{
-					case ITSTIME:
-										for (unsigned int i = 0; i < myinfo.getBirdCount(); i++)
-										{
-											flock[i].project(flock, myinfo.getBirdCount(), myinfo.getRandomJiggleLimit(), myinfo.getEyesight());
-										}
-										for (unsigned int i = 0; i < myinfo.getBirdCount(); i++)
-										{
-											flock[i].move(HEIGHT, WIDTH);
-										}
-										draw_birds(&myinfo, flock);
-										break;
-
-					case '1':case '2':case 'E':case 'J':case 'V': case 'D':case UP:case DOWN:
-										modify(whatsNext, &myinfo, flock);
-										break;
-					case DO_EXIT:
-										quit = true;
-										break;
-
-					default:			break;
-				}
+				whatsNext = eventGet();
+				eventHandle(whatsNext, &myinfo, flock, &modifier, &quit);
 			}
 
 			delete[] flock;
 		}
-		else
+		else	//codigos de error correspondientes al parseo de linea de comando
 		{
 			cout << "Input Error\n";
+			switch (parseResult)
+			{
+			case KEY:
+				cout << "Missing Key\n";
+				break;
+			case VALUE:
+				cout << "Missing Value\n";
+				break;
+			case CB_OPT:
+				cout << "Invalid Option\n";
+				break;
+			case CB_PAR:
+				cout << "Invalid Parameter\n";
+			default:
+				break;
+			}
+
+
 			getchar();
 		}
 		destroy_all();
