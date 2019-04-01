@@ -1,10 +1,10 @@
 #include <iostream>
 #include <cstring>
 #include <cstdlib>
-#include <cmath>
+#define _USE_MATH_DEFINES
+#include <math.h>
 #include "Callback.h"
 #include "UserData.h"
-
 using namespace std;
 
 int parseCallBack(const char* key, const char* value, void* usrData) //chequea si los datos ingresados por la linea de comandos son validos
@@ -23,7 +23,7 @@ int parseCallBack(const char* key, const char* value, void* usrData) //chequea s
 				return CB_ERR;
 			}
 		}
-		else if (!strcmp(key, "eyesight") && 0 < tempValue) //vista del pajaro   FALTA COTA SUPERIOR
+		else if (!strcmp(key, "eyesight") && 0 < tempValue < MAX_EYESIGHT) //vista del pajaro   FALTA COTA SUPERIOR
 		{
 			if (!(myData->setEyesight(tempValue)))
 			{
@@ -31,7 +31,7 @@ int parseCallBack(const char* key, const char* value, void* usrData) //chequea s
 				return CB_ERR;
 			}
 		}
-		else if (!strcmp(key, "randomjigglelimit") && 0 < tempValue) //modificador de precision de la vista	  FALTA COTA SUPERIOR
+		else if (!strcmp(key, "randomjigglelimit") && 0 < tempValue < MAX_RDMJL) //modificador de precision de la vista	  FALTA COTA SUPERIOR
 		{
 			if (!(myData->setRandomJiggleLimit(tempValue)))
 			{

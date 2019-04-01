@@ -31,7 +31,7 @@ static ALLEGRO_DISPLAY *display = NULL;
 static ALLEGRO_EVENT_QUEUE *event_queue = NULL;
 static ALLEGRO_TIMER *timer = NULL;
 static ALLEGRO_EVENT ev;
-static char modifier = NULL; //puntero al valor que ay que modificar
+static char modifier = NULL; //puntero al valor que hay que modificar
 static bool oneclick = false;  //flag para evitar muchas lecturas apretando 1 vez
 /***************************** PROTOTIPOS **************************************/
 static void up_down(const char& direction, userData* myinfo, tweety* birds);

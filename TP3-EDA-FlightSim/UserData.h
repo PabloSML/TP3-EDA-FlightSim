@@ -5,7 +5,12 @@
 #include <cstdbool>
 
 #define EMPTY 0		//los campos de la clase userData se inicializan con esta constante
-
+#define EYESIGHT_DELTA 1.0
+#define MIN_EYESIGHT  0.0
+#define MAX_EYESIGHT 70.0
+#define RDMJL_DELTA (10.0 * 2*M_PI / 360.0) //10 grados
+#define MIN_RDMJL 0.0
+#define MAX_RDMJL (M_PI)
 
 class userData {
 
