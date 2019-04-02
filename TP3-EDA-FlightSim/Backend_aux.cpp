@@ -12,7 +12,7 @@ void eventHandle(const char& key, userData* myinfo, tweety* flock, char* modifie
 {
 	switch (key)
 	{
-	case ITSTIME:
+	case ITSTIME: //Caso de timer para hacer refresh en pantalla
 		for (unsigned int i = 0; i < myinfo->getBirdCount(); i++)
 		{
 			flock[i].project(flock, myinfo->getBirdCount(), myinfo->getRandomJiggleLimit(), myinfo->getEyesight());
@@ -24,7 +24,7 @@ void eventHandle(const char& key, userData* myinfo, tweety* flock, char* modifie
 		draw_birds(myinfo, flock);
 		break;
 
-	case '1':
+	case '1': //Cambio de modo
 		myinfo->setMode(1);
 		for (unsigned int i = 0; i < myinfo->getBirdCount(); i++)
 		{
@@ -33,7 +33,7 @@ void eventHandle(const char& key, userData* myinfo, tweety* flock, char* modifie
 		al_clear_to_color(SKY_COLOR);
 		al_flip_display();
 		break;
-	case '2':
+	case '2'://Cambio de modo
 		myinfo->setMode(2);
 		for (unsigned int i = 0; i < myinfo->getBirdCount(); i++)
 		{
@@ -42,9 +42,9 @@ void eventHandle(const char& key, userData* myinfo, tweety* flock, char* modifie
 		al_clear_to_color(SKY_COLOR);
 		al_flip_display();
 		break;
-	case 'E': case 'V': case 'J': *modifier = key; break;
-	case 'D': show_stats(myinfo); break;
-	case UP: case DOWN: up_down(key, myinfo, flock, *modifier); break;
+	case 'E': case 'V': case 'J': *modifier = key; break; //Cambio de variable a modificar
+	case 'D': show_stats(myinfo); break; //Muestra de eyesight y randomjiggle
+	case UP: case DOWN: up_down(key, myinfo, flock, *modifier); break; //Incremento o decremento de variable seleccionada
 	case DO_EXIT:
 		*quit = true;
 		break;

@@ -40,7 +40,7 @@ tweety::project(tweety* flock, int birdCount, double randomJiggleLimit, double e
 			divider++;
 		}
 	}
-	newAngle = (angleSum / divider) + (randDoubleBetween(-randomJiggleLimit, randomJiggleLimit));
+	newAngle = (angleSum / divider) + (randDoubleBetween(-randomJiggleLimit, randomJiggleLimit));//Valores elegidos para evitar vuelo circular
 
 }
 

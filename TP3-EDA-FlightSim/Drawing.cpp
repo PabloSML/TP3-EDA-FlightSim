@@ -187,18 +187,19 @@ void show_stats(userData* myinfo)
 	ALLEGRO_FONT *font = NULL;
 	font = al_load_font("FreeMono.ttf",DISP_MULT*2,0);
 	if (font != NULL)
-	{
+	{//Mostramos variables
 		al_draw_textf(font, txtcolor, DISP_MULT, DISP_MULT * 3, 0, "Eyesight:%f", myinfo->getEyesight());
 		al_draw_textf(font, txtcolor, DISP_MULT, DISP_MULT * 6, 0, "RandomjiggleLimit:%f", myinfo->getRandomJiggleLimit());
 		al_flip_display();
-		al_rest(2.5);
+		al_rest(1.5);//Hay que dejar leer
+		al_flush_event_queue(event_queue);//Vaciamos la event_queue para evitar problemas
 		al_destroy_font(font);
 	}
 
 }
 void draw_birds(userData* myinfo, tweety* flock)
 {
-	al_clear_to_color(SKY_COLOR);
+	al_clear_to_color(SKY_COLOR);//Cargamos fondo y borramos pajaros anteriores
 	for (unsigned int i = 0; i < myinfo->getBirdCount(); i++)
 	{
 		point* tempPos = flock[i].getPos();

@@ -1,4 +1,4 @@
-/************************ LIBRERIAS ************************/
+/************************************************ LIBRERIAS *********************************************/
 #include <iostream>
 #include <cstdlib>
 #include <new>
@@ -12,8 +12,15 @@
 #include "Drawing.h"
 #include "Backend_aux.h"
 
-#define INPUT_NEEDED 4
+#define INPUT_NEEDED 4 //Cantidad de argumentos 
+/******************************************* USO DEL PROGRAMA *********************************************
+ARGUMENTOS: -birds x -eyesight x -randomjigglelimit x -mode x (Cada uno cuenta con sus respectivas cotas).
 
+EJECUCION: - Con 'E','V','J' se eligen las variables.
+			- Con las flechas arriba y abajo se modifican.
+			- Con 'D' muestra los valores de eyesight y randomjiggle por un tiempo.
+			- Con 'Q' se cierra el programa
+***********************************************************************************************************/
 using namespace std;
 
 int main(int argc, const char* argv[])
@@ -32,9 +39,9 @@ int main(int argc, const char* argv[])
 		{
 			tweety* flock = new (std::nothrow) tweety[myinfo.getBirdCount()];
 
-			bool quit = false;
+			bool quit = false; //flag para cerrar todo
 			char modifier;
-
+			//Dependiendo el modo la inicialzacion de la velocidad difiere
 			if (myinfo.getMode() == 1)
 			{
 				for (unsigned int i = 0; i < myinfo.getBirdCount(); i++)
@@ -51,10 +58,10 @@ int main(int argc, const char* argv[])
 			}
 
 
-			while (!quit)
+			while (!quit) //Corazon del main y proyecto
 			{
-				whatsNext = eventGet();
-				eventHandle(whatsNext, &myinfo, flock, &modifier, &quit);
+				whatsNext = eventGet(); //Conseguimos el proximo evento en la cola
+				eventHandle(whatsNext, &myinfo, flock, &modifier, &quit); //Analizamos dicho evento
 			}
 
 			delete[] flock;
